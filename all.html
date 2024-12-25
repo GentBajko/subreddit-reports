@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Subreddit Reports</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #frames-container iframe {
+            width: 100%;
+            height: 600px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+        #load-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        #input-folder {
+            padding: 10px;
+            font-size: 16px;
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <h1>View Subreddit Reports</h1>
+    <p>Enter the subreddit to view all reports:</p>
+    <input type="text" id="input-folder" placeholder="e.g., asmongold or kotakuinaction">
+    <button id="load-button">Load Reports</button>
+    
+    <div id="frames-container"></div>
+
+    <script>
+        document.getElementById('load-button').addEventListener('click', function() {
+            const folder = document.getElementById('input-folder').value.trim();
+            if (!folder) {
+                alert('Please enter a valid subreddit name.');
+                return;
+            }
+
+            const frameContainer = document.getElementById('frames-container');
+            frameContainer.innerHTML = '';
+
+            const htmlFiles = [
+                "top_2grams.html",
+                "top_3grams.html",
+                "top_authors_total_comment_scores.html",
+                "top_authors_total_post_scores.html",
+                "top_boxplot_comment_scores_by_author.html",
+                "top_boxplot_post_scores_by_author.html",
+                "top_boxplot_scores.html",
+                "top_combined_posts_comments_over_time.html",
+                "top_comment_length_distribution.html",
+                "top_comment_length_vs_score.html",
+                "top_comments_activity_vs_score.html",
+                "top_comment_score_distribution.html",
+                "top_comments_over_time.html",
+                "top_comments_per_post_distribution.html",
+                "top_comment_word_frequency.html",
+                "top_correlation_matrix.html",
+                "top_cumulative_comment_scores.html",
+                "top_cumulative_post_scores.html",
+                "top_distribution_day.html",
+                "top_heatmap_posts_comments.html",
+                "top_network_authors_urls.html",
+                "top_posts_activity_vs_score.html",
+                "top_score_distribution.html",
+                "top_score_proportion_pie.html",
+                "top_score_vs_num_comments.html",
+                "top_sentiment_scores_by_author.html",
+                "top_sentiment_scores_comments.html",
+                "top_sentiment_scores_posts.html",
+                "top_side_by_side_boxplots.html",
+                "top_time_to_first_comment.html",
+                "top_title_length_distribution.html",
+                "top_title_lengths_over_time.html",
+                "top_title_length_vs_score.html",
+                "top_top_authors.html",
+                "top_top_comment_authors.html",
+                "top_top_urls_comments.html",
+                "top_top_urls_posts.html",
+            ];
+
+            htmlFiles.forEach(function(file) {
+                const iframe = document.createElement('iframe');
+                iframe.src = `subreddits/${encodeURIComponent(folder)}/${encodeURIComponent(file)}`;
+                iframe.title = file;
+                iframe.onload = function() {
+                    console.log(`${file} loaded successfully.`);
+                };
+                iframe.onerror = function() {
+                    console.error(`Failed to load ${file}. Please ensure the file exists in the specified directory.`);
+                };
+                frameContainer.appendChild(iframe);
+            });
+        });
+    </script>
+</body>
+</html>
