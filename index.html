@@ -37,7 +37,7 @@
 
     <script>
         document.getElementById('load-button').addEventListener('click', function() {
-            const folder = document.getElementById('input-folder').value.trim();
+            const folder = document.getElementById('input-folder').value.trim().toLowerCase();
             if (!folder) {
                 alert('Please enter a valid subreddit name.');
                 return;
